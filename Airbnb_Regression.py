@@ -19,7 +19,7 @@ def eval_metrics(actual, pred):
 	mae = mean_absolute_error(actual, pred)
 	r2 = r2_score(actual, pred)
 	return rmse, mae, r2 
-spark = SparkSession.builder.master("yarn").getOrCreate()
+spark = SparkSession.builder.master("livy").getOrCreate()
 df = spark.sql('select * from knime_datasets.queens').toPandas() 
 target = "Review_Scores_Rating5"
 df = df[df.Review_Scores_Rating5.notnull()]
