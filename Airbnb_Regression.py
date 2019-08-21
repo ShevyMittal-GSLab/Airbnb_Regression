@@ -9,7 +9,7 @@ import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import ElasticNet
-
+from pyspark.sql import SparkSession
 import mlflow
 import mlflow.sklearn
 import mlflow.models
@@ -19,6 +19,7 @@ def eval_metrics(actual, pred):
 	mae = mean_absolute_error(actual, pred)
 	r2 = r2_score(actual, pred)
 	return rmse, mae, r2 
+spark = SparkSession.builder.master("yarn").getOrCreate()
 df = spark.sql('select * from knime_datasets.queens').toPandas() 
 target = "Review_Scores_Rating5"
 df = df[df.Review_Scores_Rating5.notnull()]
