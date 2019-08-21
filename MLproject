@@ -2,4 +2,4 @@ name: Airbnb_Regression
 
 entry_points:
   main:
-    command: "/usr/bin/spark-submit Airbnb_Regression.py"
+    command: "/usr/bin/pyspark Airbnb_Regression.py"
