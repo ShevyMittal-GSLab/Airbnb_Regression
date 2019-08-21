@@ -5,7 +5,7 @@ warehouse_location = "/apps/spark"
 spark = SparkSession.builder.getOrCreate()
 print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 print(spark)
-print(spark.master)
+print(spark.catalog)
 print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2222")
 print(spark.sparkContext.getConf().getAll())
 df = spark.sql('show databases').toPandas()
