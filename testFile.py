@@ -1,7 +1,7 @@
 
 from pyspark.sql import SparkSession
 
-warehouse_location = "/apps/spark/warehouse"
+warehouse_location = "/apps/spark"
 spark = SparkSession.builder.config("spark.sql.warehouse.dir", warehouse_location).getOrCreate()
 df = spark.sql('show databases').toPandas()
 print(df)
