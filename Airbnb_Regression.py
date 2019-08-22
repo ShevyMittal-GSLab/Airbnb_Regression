@@ -69,8 +69,9 @@ with mlflow.start_run():
 	mlflow.log_metric("r2", r2)
 	mlflow.log_metric("mae", mae)
 	mlflow.log_artifact("plot.png")
+	print("Logging Model")
 	mlflow.sklearn.log_model(lr,".")
-
+	print("Model Logged")
 	runId = mlflow.active_run().info.run_id
 	expId = mlflow.active_run().info.experiment_id
 	artifact_uri = mlflow.active_run().info.artifact_uri
