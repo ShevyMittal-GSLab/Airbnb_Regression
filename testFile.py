@@ -2,7 +2,7 @@
 from pyspark.sql import SparkSession
 
 warehouse_location = "/apps/spark"
-spark = SparkSession.builder.getOrCreate()
+spark = SparkSession.builder.config('spark.sql.catalogImplementation','hive').getOrCreate()
 print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 print(spark)
 print(spark.catalog)
