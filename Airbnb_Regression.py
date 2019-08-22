@@ -19,8 +19,7 @@ def eval_metrics(actual, pred):
 	mae = mean_absolute_error(actual, pred)
 	r2 = r2_score(actual, pred)
 	return rmse, mae, r2 
-warehouse_location = "/apps/spark/warehouse"
-spark = SparkSession.builder.config("spark.sql.warehouse.dir", warehouse_location).getOrCreate()
+spark = SparkSession.builder.config('spark.sql.catalogImplementation','hive').getOrCreate()
 df = spark.sql('select * from knime_datasets.queens').toPandas() 
 target = "Review_Scores_Rating5"
 df = df[df.Review_Scores_Rating5.notnull()]
