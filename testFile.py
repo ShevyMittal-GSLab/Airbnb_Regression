@@ -12,3 +12,6 @@ def testFile():
 	print(df)
 	df2 =  spark.sql('show tables').toPandas()
 	print(df2)
+
+if __name__ == '__main__':
+    testFile()
