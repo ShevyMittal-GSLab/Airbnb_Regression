@@ -51,7 +51,7 @@ def airbnb_regression():
 	learning_rate = 0.1
 	colsample_bytree = 0.3
 	max_depth = 5
-	objective = reg:linear
+	objective = 'reg:linear'
 	n_estimators = 10
 	subsample = None
 	gamma = None
