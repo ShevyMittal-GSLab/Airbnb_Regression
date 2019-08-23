@@ -59,7 +59,12 @@ def testFile():
 	mlflow.set_tracking_uri("http://10.43.13.1:5000")
 	experiment_name = "Airbnb_Regression"
 	mlflow.set_experiment(experiment_name)
-	
+	with mlflow.start_run():
+		#lr = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=random_state)
+		#lr.fit(train_x, train_y)
+		xg_reg = xgb.XGBRegressor(objective ='reg:linear', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
+		#predicted_qualities = lr.predict(test_x)
+		xg_reg.fit(train_x, train_y)
 	print("END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2222")
 if __name__ == '__main__':
     testFile()
