@@ -2,6 +2,6 @@ name: Airbnb_Regression
 
 entry_points:
   airbnb_regression:
-	command: "/usr/bin/spark-submit Airbnb_Regression.py"
+    command: "/usr/bin/spark-submit Airbnb_Regression.py"
   testFile:
-	command: "/usr/bin/spark-submit testFile.py"
+    command: "/usr/bin/spark-submit testFile.py"
