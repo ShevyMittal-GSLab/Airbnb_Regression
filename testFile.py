@@ -33,6 +33,29 @@ def testFile():
 	print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 	print(df)
 	print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2222")
-	
+	height = [5010, 32, 2, 39, 4, 23, 7, 225, 83, 254, 311, 1933, 2333, 5412, 4227]
+	bars = ['100', '20', '30', '40', '45', '50', '55', '60', '65', '70', '75', '80', '85', '90', '95']
+	y_pos = np.arange(len(bars))
+	plt.bar(y_pos, height)
+	plt.xticks(y_pos, bars)
+	plt.ylabel("count")
+	plt.xlabel(target)
+	plt.show()
+	plt.savefig("plot.png")
+	def eval_metrics(actual, pred):
+		rmse = np.sqrt(mean_squared_error(actual, pred))
+		mae = mean_absolute_error(actual, pred)
+		r2 = r2_score(actual, pred)
+		return rmse, mae, r2
+	alpha = 10
+	learning_rate = 0.1
+	colsample_bytree = 0.3
+	max_depth = 5
+	objective = 'reg:linear'
+	n_estimators = 10
+	subsample = None
+	gamma = None
+	lambda1 = None
+	print("END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2222")
 if __name__ == '__main__':
     testFile()
