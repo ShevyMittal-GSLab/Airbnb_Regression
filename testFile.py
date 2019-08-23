@@ -65,6 +65,20 @@ def testFile():
 		xg_reg = xgb.XGBRegressor(objective ='reg:linear', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
 		#predicted_qualities = lr.predict(test_x)
 		xg_reg.fit(train_x, train_y)
+		predicted_qualities = xg_reg.predict(test_x)
+		(rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
+		
+		print("XGBoost model")
+		print("  RMSE: %s" % rmse)
+		print("  MAE: %s" % mae)
+		print("  R2: %s" % r2)
+		
+		mlflow.log_param("objective", objective)
+		mlflow.log_param("colsample_bytree", colsample_bytree)
+		mlflow.log_param("learning_rate", learning_rate)
+		mlflow.log_param("max_depth", max_depth)
+		mlflow.log_param("alpha", alpha)
+		mlflow.log_param("n_estimators", n_estimators)
 	print("END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2222")
 if __name__ == '__main__':
     testFile()
