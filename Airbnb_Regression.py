@@ -93,5 +93,7 @@ def airbnb_regression():
 		runId = mlflow.active_run().info.run_id
 		expId = mlflow.active_run().info.experiment_id
 		artifact_uri = mlflow.active_run().info.artifact_uri
-	
+
+if __name__ == '__main__':
+    airbnb_regression()	
 
