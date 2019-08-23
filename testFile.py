@@ -86,7 +86,7 @@ def testFile():
 		mlflow.log_artifact("plot.png")
 		print("Logging Model")
 		#mlflow.sklearn.log_model(lr,".")
-		#mlflow.sklearn.log_model(xg_reg,".")
+		mlflow.sklearn.log_model(xg_reg,".")
 		print("Model Logged")
 	print("END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2222")
 if __name__ == '__main__':
