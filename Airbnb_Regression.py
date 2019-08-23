@@ -13,8 +13,11 @@ import mlflow.models
 import xgboost as xgb
  
 def airbnb_regression():
+	print("STARTED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 	spark = SparkSession.builder.config('spark.sql.catalogImplementation','hive').getOrCreate()
+	print("1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 	df = spark.sql('select * from knime_datasets.queens').toPandas() 
+	print("2>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 	target = "Review_Scores_Rating5"
 	df = df[df.Review_Scores_Rating5.notnull()]
 	df = df[df.Number_of_Records.notnull()]
@@ -44,37 +47,47 @@ def airbnb_regression():
 		mae = mean_absolute_error(actual, pred)
 		r2 = r2_score(actual, pred)
 		return rmse, mae, r2
-	alpha = 0.5
-	l1_ratio = 0.5
-	random_state = 42
-	max_iter = None
-	mlflow_run_name = 'ElasticNet' + '_0'
+	alpha = 10
+	learning_rate = 0.1
+	colsample_bytree = 0.3
+	max_depth = 5
+	objective = reg:linear
+	n_estimators = 10
+	subsample = None
+	gamma = None
+	lambda1 = None
 
 	mlflow.set_tracking_uri("http://10.43.13.1:5000")
 	experiment_name = "Airbnb_Regression"
 	mlflow.set_experiment(experiment_name)
 	with mlflow.start_run():
-		lr = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=random_state)
-		lr.fit(train_x, train_y)
+		#lr = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=random_state)
+		#lr.fit(train_x, train_y)
 		xg_reg = xgb.XGBRegressor(objective ='reg:linear', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
-		predicted_qualities = lr.predict(test_x)
-		predicted_qualities = xg_reg.predict(test_x)
+		#predicted_qualities = lr.predict(test_x)
 		xg_reg.fit(train_x, train_y)
+		predicted_qualities = xg_reg.predict(test_x)
 		(rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
-		print("Elasticnet model (alpha=%f, l1_ratio=%f):" % (alpha, l1_ratio))
+		
+		print("XGBoost model")
 		print("  RMSE: %s" % rmse)
 		print("  MAE: %s" % mae)
 		print("  R2: %s" % r2)
 		
+		mlflow.log_param("objective", objective)
+		mlflow.log_param("colsample_bytree", colsample_bytree)
+		mlflow.log_param("learning_rate", learning_rate)
+		mlflow.log_param("max_depth", max_depth)
 		mlflow.log_param("alpha", alpha)
-		mlflow.log_param("l1_ratio", l1_ratio)
-		mlflow.log_param("Model","ElasticNet")
+		mlflow.log_param("n_estimators", n_estimators)
+
+		mlflow.log_param("Model","XGBoost")
 		mlflow.log_metric("rmse", rmse)
 		mlflow.log_metric("r2", r2)
 		mlflow.log_metric("mae", mae)
 		mlflow.log_artifact("plot.png")
 		print("Logging Model")
-		mlflow.sklearn.log_model(lr,".")
+		#mlflow.sklearn.log_model(lr,".")
 		mlflow.sklearn.log_model(xg_reg,".")
 		print("Model Logged")
 		runId = mlflow.active_run().info.run_id
